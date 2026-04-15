@@ -56,12 +56,19 @@ while True:
         else:
             tasks.append({"name": add_to_list, "done": False, "created_at": str(last_reset_date)})
             save_tasks(tasks)
+            print(tasks)
             
     elif mainmenu == 2:
         break #mark a habit complete for the day
     elif mainmenu == 3:
-        
-        break
+        delete_from_list = input("What daily habit would you like to delete, select based on number. or type ""back to menu"" to return to menu: ").lower()
+        if delete_from_list == "back to menu":
+            continue
+        else:
+            delete_from_list = int(delete_from_list)
+            tasks.remove(tasks[delete_from_list-1])
+            save_tasks(tasks)
+            
     elif mainmenu == 4:
         break #quit program
     
