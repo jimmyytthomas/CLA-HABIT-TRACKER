@@ -45,11 +45,17 @@ todays_tasks = tasks
 
 #Main menu
 while True:
-    habit_number = 0
+    
+    todays_list = []
     for task in tasks:
-        habit_number += 1
+        
         if str(todays_date) not in task.get("completed",[]):
-            print("habit #", habit_number, task["name"])
+            todays_list.append(task)
+    
+    habit_number = 0
+    for task in todays_list:
+        habit_number += 1
+        print("habit #", habit_number, task["name"])
 
             
     print("Type 1,2,3 based on the options below: ")
@@ -88,7 +94,7 @@ while True:
                 print("Invalid choice try again")
                 continue
 
-            selected_task = tasks[mark_complete - 1]
+            selected_task = todays_list[mark_complete - 1]
 
             if str(last_reset_date) in selected_task["completed"]:
                 print("You already completed this habit today")
@@ -118,7 +124,7 @@ while True:
                 print("Invalid choice, try again")
                 continue
             
-            tasks.remove(tasks[delete_from_list-1])
+            tasks.remove(todays_list[delete_from_list-1])
             habit_number -= 1
             save_tasks(tasks)
          
