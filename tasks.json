@@ -1,12 +1,24 @@
 [
   {
-    "name": "hw",
-    "done": false,
-    "created_at": "2026-04-15"
+    "name": "home work",
+    "completed": [
+      "2026-04-20"
+    ],
+    "created_at": "2026-04-20"
   },
   {
-    "name": "study",
-    "done": false,
-    "created_at": "2026-04-15"
+    "name": "coding",
+    "completed": [],
+    "created_at": "2026-04-20"
+  },
+  {
+    "name": "work",
+    "completed": [],
+    "created_at": "2026-04-20"
+  },
+  {
+    "name": "more coding",
+    "completed": [],
+    "created_at": "2026-04-20"
   }
 ]

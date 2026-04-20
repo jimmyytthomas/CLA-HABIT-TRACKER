@@ -6,6 +6,7 @@ import json
 
 
 last_reset_date = datetime.date.today()
+todays_date = last_reset_date
 
 #todays todo uploaded from the todo list in the json
 
@@ -34,7 +35,11 @@ tasks = load_tasks()
 #save_tasks(tasks)
 todays_tasks = tasks
 
-# Add a task
+
+
+
+
+
 
         
 
@@ -43,31 +48,83 @@ while True:
     habit_number = 0
     for task in tasks:
         habit_number += 1
-        print("habit #",habit_number,task['name'])
+        if str(todays_date) not in task.get("completed",[]):
+            print("habit #", habit_number, task["name"])
+
+            
     print("Type 1,2,3 based on the options below: ")
+    
+    
     mainmenu = int(input("1. Add habit \n2. Mark Complete \n3. Delete Habit \n4. Quit \nYou choose: "))
+    
     if mainmenu not in [1,2,3,4]:
         print("Invalid option try again")
         continue
+    
     if mainmenu == 1:
         add_to_list = input("What daily habit would you like to add? or type ""back to menu"" to return to menu: ").lower()
+        
         if add_to_list == "back to menu":
             continue
         else:
-            tasks.append({"name": add_to_list, "done": False, "created_at": str(last_reset_date)})
+            tasks.append({"name": add_to_list, "completed": [], "created_at": str(last_reset_date)})
             save_tasks(tasks)
             print(tasks)
-            
+
+
+
+
+
+
     elif mainmenu == 2:
-        break #mark a habit complete for the day
+        mark_complete = input("Which task did you complete?, select based on number. or type back to menu to return to menu: ").lower()
+
+        
+        if mark_complete == "back to menu":
+            continue
+        else:
+            mark_complete = int(mark_complete)
+            if mark_complete > habit_number or mark_complete <= 0:
+                print("Invalid choice try again")
+                continue
+
+            selected_task = tasks[mark_complete - 1]
+
+            if str(last_reset_date) in selected_task["completed"]:
+                print("You already completed this habit today")
+                continue
+            else:
+                selected_task["completed"].append(str(last_reset_date))
+                save_tasks(tasks)  
+
+
+
+
+
+
+
+
+
+
+
     elif mainmenu == 3:
-        delete_from_list = input("What daily habit would you like to delete, select based on number. or type ""back to menu"" to return to menu: ").lower()
+        delete_from_list = input("What daily habit would you like to delete, select based on number. or type back to menu to return to menu: ").lower()
+    
         if delete_from_list == "back to menu":
             continue
         else:
             delete_from_list = int(delete_from_list)
+            if delete_from_list > habit_number or delete_from_list <= 0:
+                print("Invalid choice, try again")
+                continue
+            
             tasks.remove(tasks[delete_from_list-1])
+            habit_number -= 1
             save_tasks(tasks)
+         
+        
+            
+            
             
     elif mainmenu == 4:
         break #quit program
